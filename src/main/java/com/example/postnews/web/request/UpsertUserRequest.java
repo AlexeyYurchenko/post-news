@@ -18,8 +18,4 @@ public class UpsertUserRequest {
 
     @Email
     private String email;
-
-
-
-
 }

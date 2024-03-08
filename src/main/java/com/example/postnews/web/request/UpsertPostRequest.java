@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UpsertPostRequest {
 
-
     @NotNull(message = "User ID not specified")
     private Long userId;
 
@@ -25,5 +24,4 @@ public class UpsertPostRequest {
 
     @NotBlank(message = "News category name not specified")
     private String categoryName;
-
 }

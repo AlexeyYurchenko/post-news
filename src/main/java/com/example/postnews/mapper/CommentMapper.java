@@ -1,0 +1,33 @@
+package com.example.postnews.mapper;
+
+import com.example.postnews.entity.Comment;
+import com.example.postnews.web.request.UpsertCommentRequest;
+import com.example.postnews.web.response.CommentResponse;
+import com.example.postnews.web.response.list.CommentListResponse;
+import org.mapstruct.DecoratedWith;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
+
+import java.util.List;
+
+@DecoratedWith(CommentMapperDelegate.class)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface CommentMapper {
+
+    Comment requestToComment(UpsertCommentRequest request);
+
+    @Mapping(source = "commentId", target = "id")
+    Comment requestToComment(Long commentId, UpsertCommentRequest request);
+
+    CommentResponse commentToResponse(Comment comment);
+
+    List<CommentResponse> commentListToResponseList(List<Comment> comments);
+
+    default CommentListResponse commentListToCommentListResponse(List<Comment> comments) {
+        CommentListResponse response = new CommentListResponse();
+        response.setCommentResponseList(commentListToResponseList(comments));
+        return response;
+    }
+
+}

@@ -20,5 +20,4 @@ public class UpsertCommentRequest {
     @NotBlank(message = "Comment cannot be empty")
     private String comment;
 
-
 }

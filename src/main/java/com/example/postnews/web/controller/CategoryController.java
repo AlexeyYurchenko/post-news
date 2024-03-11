@@ -33,7 +33,7 @@ public class CategoryController {
         if (category != null) {
             return ResponseEntity.ok(categoryMapper.categoryToResponse(category));
         }
-        throw new EntityNotFoundException(MessageFormat.format("Category with id= {0} not found", id));
+        throw new EntityNotFoundException(MessageFormat.format("Category with id = {0} not found", id));
     }
     @PostMapping
     public ResponseEntity<CategoryResponse> create(@RequestBody @Valid UpsertCategoryRequest request) {
@@ -46,11 +46,14 @@ public class CategoryController {
         if (updateCategory != null) {
             return ResponseEntity.ok(categoryMapper.categoryToResponse(updateCategory));
         }
-        throw new EntityNotFoundException(MessageFormat.format("Category with id= {0} not found", categoryId));
+        throw new EntityNotFoundException(MessageFormat.format("Category with id = {0} not found", categoryId));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        categoryService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        Category deleteCategory = categoryService.deleteById(id);
+        if (deleteCategory != null) {
+            return ResponseEntity.noContent().build();
+        }
+        throw new EntityNotFoundException(MessageFormat.format("Category with id = {0} not found", id));
     }
 }

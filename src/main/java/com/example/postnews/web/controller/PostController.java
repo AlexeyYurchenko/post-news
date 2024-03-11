@@ -55,7 +55,7 @@ public class PostController {
             newsResponse.setCountComment(Long.valueOf(comments.size()));
             return ResponseEntity.ok(newsResponse);
         }
-        throw new EntityNotFoundException(MessageFormat.format("Post with id= {0} not found", id));
+        throw new EntityNotFoundException(MessageFormat.format("Post with id = {0} not found", id));
     }
     @PostMapping
     public ResponseEntity<PostResponse> create(@RequestBody @Valid UpsertPostRequest request) {
@@ -68,11 +68,14 @@ public class PostController {
         if (updatePost !=null) {
             return ResponseEntity.ok(postMapper.postToResponse(updatePost));
         }
-        throw new EntityNotFoundException(MessageFormat.format("Post with id= {0} not found", postId));
+        throw new EntityNotFoundException(MessageFormat.format("Post with id = {0} not found", postId));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        postService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        Post deletePost = postService.deleteById(id);
+        if (deletePost !=null) {
+            return ResponseEntity.noContent().build();
+        }
+        throw new EntityNotFoundException(MessageFormat.format("Post with id = {0} not found", id));
     }
 }

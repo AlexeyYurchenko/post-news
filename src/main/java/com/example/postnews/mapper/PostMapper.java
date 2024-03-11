@@ -2,6 +2,7 @@ package com.example.postnews.mapper;
 
 import com.example.postnews.entity.Post;
 import com.example.postnews.web.request.UpsertPostRequest;
+import com.example.postnews.web.response.PostFindAllResponse;
 import com.example.postnews.web.response.PostResponse;
 import com.example.postnews.web.response.list.PostListResponse;
 import org.mapstruct.DecoratedWith;
@@ -21,7 +22,7 @@ public interface PostMapper {
 
     PostResponse postToResponse(Post post);
 
-    List<PostResponse> postListToResponseList(List<Post> postList);
+    List<PostFindAllResponse> postListToResponseList(List<Post> postList);
 
     default PostListResponse postListToPostListResponse(List<Post> postList) {
         PostListResponse response = new PostListResponse();

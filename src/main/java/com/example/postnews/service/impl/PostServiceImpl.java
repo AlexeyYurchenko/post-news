@@ -24,6 +24,7 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final UserService userService;
     private final CategoryService categoryService;
+
     @Override
     public List<Post> findAll() {
         log.debug("PostServiceImpl -> findAll");
@@ -46,9 +47,9 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post save(Post post) {
         log.debug("PostServiceImpl->save news= {}", post);
-        User user = userService.findById(post.getAuthor().getId());
+        User user = userService.findById(post.getUser().getId());
         Category category = categoryService.findById(post.getCategory().getId());
-        post.setAuthor(user);
+        post.setUser(user);
         post.setCategory(category);
         return postRepository.save(post);
     }
@@ -56,11 +57,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post update(Post post) {
         log.debug("PostServiceImpl->update news= {}", post);
-        User user = userService.findById(post.getAuthor().getId());
+        User user = userService.findById(post.getUser().getId());
         Category category = categoryService.findById(post.getCategory().getId());
         Post existedPost = findById(post.getId());
         BeanUtils.copyNonNullProperties(post, existedPost);
-        existedPost.setAuthor(user);
+        existedPost.setUser(user);
         existedPost.setCategory(category);
         return postRepository.save(existedPost);
     }

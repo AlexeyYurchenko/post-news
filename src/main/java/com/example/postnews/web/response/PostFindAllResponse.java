@@ -5,13 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostResponse {
+public class PostFindAllResponse {
 
     private Long id;
 
@@ -27,5 +24,5 @@ public class PostResponse {
 
     private Long countComment;
 
-    private List<CommentResponse> comments = new ArrayList<>();
 }
+

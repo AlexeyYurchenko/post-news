@@ -29,7 +29,7 @@ public class User {
     @ToString.Exclude
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Post> posts = new ArrayList<>();
 
@@ -38,7 +38,7 @@ public class User {
         comments.add(comment);
     }
     public void addPost(Post post) {
-        post.setAuthor(this);
+        post.setUser(this);
         posts.add(post);
     }
 }

@@ -24,7 +24,7 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping
-    public ResponseEntity<UserListResponse> findAll(@RequestParam int pageNumber, @RequestParam int pageSize) {
+    public ResponseEntity<UserListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,@RequestParam(defaultValue = "10") int pageSize) {
         return ResponseEntity.ok(userMapper.userListToUserListResponse(userService.findAll(pageNumber,pageSize)));
     }
 

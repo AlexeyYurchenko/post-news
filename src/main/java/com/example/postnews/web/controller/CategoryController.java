@@ -24,7 +24,7 @@ public class CategoryController {
     private final CategoryMapper categoryMapper;
 
     @GetMapping
-    public ResponseEntity<CategoryListResponse> findAll(@RequestParam int pageNumber, @RequestParam int pageSize) {
+    public ResponseEntity<CategoryListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,@RequestParam(defaultValue = "10") int pageSize) {
         return ResponseEntity.ok(categoryMapper.categoryListToCategoryListResponse(categoryService.findAll(pageNumber,pageSize)));
     }
     @GetMapping("/{id}")

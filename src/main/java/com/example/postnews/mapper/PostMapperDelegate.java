@@ -32,7 +32,7 @@ public abstract class PostMapperDelegate implements PostMapper {
             category = categoryService.save(category);
         }
         post.setCategory(category);
-        post.setAuthor(userService.findById(request.getUserId()));
+        post.setUser(userService.findById(request.getUserId()));
         post.setComments(commentService.findAllByUserId(request.getUserId()));
         return post;
     }

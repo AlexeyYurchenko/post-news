@@ -43,9 +43,9 @@ public class Post {
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "author_id", updatable = false, nullable = false)
+    @JoinColumn(name = "user_id", updatable = false, nullable = false)
     @ToString.Exclude
-    private User author;
+    private User user;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude

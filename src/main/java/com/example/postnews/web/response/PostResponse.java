@@ -25,7 +25,7 @@ public class PostResponse {
 
     private Instant updatedAt;
 
-    private Long countComment;
+    private Integer countComment;
 
     private List<CommentResponse> comments = new ArrayList<>();
 }

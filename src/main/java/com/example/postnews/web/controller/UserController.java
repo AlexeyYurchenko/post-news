@@ -32,7 +32,6 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
         User user = userService.findById(id);
-
         if (user != null) {
             return ResponseEntity.ok(userMapper.userToResponse(user));
         }

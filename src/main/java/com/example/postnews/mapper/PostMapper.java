@@ -22,6 +22,8 @@ public interface PostMapper {
 
     PostResponse postToResponse(Post post);
 
+    PostFindAllResponse postFindAllToResponse(Post post);
+
     List<PostFindAllResponse> postListToResponseList(List<Post> postList);
 
     default PostListResponse postListToPostListResponse(List<Post> postList) {

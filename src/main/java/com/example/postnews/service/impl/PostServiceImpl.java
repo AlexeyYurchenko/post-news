@@ -10,6 +10,7 @@ import com.example.postnews.service.UserService;
 import com.example.postnews.utils.BeanUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,9 +33,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> findAll(int pageNumber, int pageSize) {
+    public Page<Post> findAll(int pageNumber, int pageSize) {
+
         log.debug("PostServiceImpl -> findAll pageNumber= {}, pageSize= {}", pageNumber, pageSize);
-        return postRepository.findAll(PageRequest.of(pageNumber, pageSize)).toList();
+
+        return postRepository.findAll(PageRequest.of(pageNumber, pageSize));
     }
 
     @Override

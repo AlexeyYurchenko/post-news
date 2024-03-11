@@ -12,13 +12,12 @@ import com.example.postnews.web.response.PostResponse;
 import com.example.postnews.web.response.list.PostListResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,20 +30,18 @@ public class PostController {
     private final CommentService commentService;
 
     @GetMapping
-    public ResponseEntity<PostListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,@RequestParam(defaultValue = "10") int pageSize) {
-        List<PostFindAllResponse> listPostResponse = new ArrayList<>();
-        List<Post> postList = postService.findAll(pageNumber,pageSize);
-        List<Long> countCommentList = postList.stream().map(e->e.getComments().stream().count()).toList();
+    public ResponseEntity <PostListResponse<PostFindAllResponse>> findAll(@RequestParam(defaultValue = "0") int pageNumber,
+                                                    @RequestParam(defaultValue = "10") int pageSize) {
+        Page<Post> posts = postService.findAll(pageNumber, pageSize);
 
-        List<PostFindAllResponse> postResponseList = postMapper.postListToResponseList(postList);
-        for (int i=0; i< postResponseList.size(); i++) {
-            postResponseList.get(i).setCountComment(countCommentList.get(i));
-            listPostResponse.add(postResponseList.get(i));
-        }
-        PostListResponse newsListResponse = new PostListResponse();
-        newsListResponse.setPostResponseList(listPostResponse);
-        return ResponseEntity.ok(newsListResponse);
+        return ResponseEntity.ok(
+                        PostListResponse.<PostFindAllResponse>builder()
+                .totalCount(posts.getTotalElements())
+                .postResponseList(posts.stream().map(postMapper::postFindAllToResponse).toList())
+                .build()
+        );
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<PostResponse> findById(@PathVariable("id") Long id) {
         Post news = postService.findById(id);

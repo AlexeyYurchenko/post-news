@@ -21,12 +21,16 @@ import java.text.MessageFormat;
 public class CategoryController {
 
     private final CategoryService categoryService;
+
     private final CategoryMapper categoryMapper;
 
     @GetMapping
-    public ResponseEntity<CategoryListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,@RequestParam(defaultValue = "10") int pageSize) {
-        return ResponseEntity.ok(categoryMapper.categoryListToCategoryListResponse(categoryService.findAll(pageNumber,pageSize)));
+    public ResponseEntity<CategoryListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,
+                                                        @RequestParam(defaultValue = "10") int pageSize) {
+        return ResponseEntity.ok(
+                categoryMapper.categoryListToCategoryListResponse(categoryService.findAll(pageNumber,pageSize)));
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponse> findById(@PathVariable Long id) {
         Category category = categoryService.findById(id);
@@ -35,19 +39,23 @@ public class CategoryController {
         }
         throw new EntityNotFoundException(MessageFormat.format("Category with id = {0} not found", id));
     }
+
     @PostMapping
     public ResponseEntity<CategoryResponse> create(@RequestBody @Valid UpsertCategoryRequest request) {
         Category newCategory = categoryService.save(categoryMapper.requestToCategory(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryMapper.categoryToResponse(newCategory));
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryResponse> update(@PathVariable("id") Long categoryId, UpsertCategoryRequest request) {
+    public ResponseEntity<CategoryResponse> update(@PathVariable("id") Long categoryId,
+                                                   UpsertCategoryRequest request) {
         Category updateCategory = categoryService.update(categoryMapper.requestToCategory(categoryId,request));
         if (updateCategory != null) {
             return ResponseEntity.ok(categoryMapper.categoryToResponse(updateCategory));
         }
         throw new EntityNotFoundException(MessageFormat.format("Category with id = {0} not found", categoryId));
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         Category deleteCategory = categoryService.deleteById(id);

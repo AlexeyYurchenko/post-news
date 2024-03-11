@@ -6,6 +6,7 @@ import com.example.postnews.service.CategoryService;
 import com.example.postnews.service.CommentService;
 import com.example.postnews.service.UserService;
 import com.example.postnews.web.request.UpsertPostRequest;
+import com.example.postnews.web.response.PostFindAllResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,11 @@ public abstract class PostMapperDelegate implements PostMapper {
     private UserService userService;
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private PostMapper postMapper;
+
+
 
     @Override
     public Post requestToPost(UpsertPostRequest request) {
@@ -35,6 +41,13 @@ public abstract class PostMapperDelegate implements PostMapper {
         post.setUser(userService.findById(request.getUserId()));
         post.setComments(commentService.findAllByUserId(request.getUserId()));
         return post;
+    }
+
+    @Override
+    public PostFindAllResponse postFindAllToResponse(Post post) {
+        PostFindAllResponse response = postMapper.postFindAllToResponse(post);
+        response.setCountComment(post.getComments().size());
+        return response;
     }
 
     @Override

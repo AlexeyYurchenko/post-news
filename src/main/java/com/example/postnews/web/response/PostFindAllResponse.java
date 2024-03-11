@@ -22,7 +22,7 @@ public class PostFindAllResponse {
 
     private Instant updatedAt;
 
-    private Long countComment;
+    private Integer countComment;
 
 }
 

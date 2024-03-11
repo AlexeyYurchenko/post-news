@@ -17,7 +17,7 @@ import java.text.MessageFormat;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/post/category")
+@RequestMapping("/api/category")
 public class CategoryController {
 
     private final CategoryService categoryService;

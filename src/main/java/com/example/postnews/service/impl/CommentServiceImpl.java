@@ -50,9 +50,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> findAllByNewsId(Long newsId) {
-        log.debug("CommentServiceImpl->findAllByNewsId newsId= {}", newsId);
-        return commentRepository.findAllByPostId(newsId);
+    public List<Comment> findAllByPostId(Long postId) {
+        log.debug("CommentServiceImpl->findAllByNewsId postId= {}", postId);
+        return commentRepository.findAllByPostId(postId);
     }
 
     @Override

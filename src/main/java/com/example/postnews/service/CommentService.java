@@ -8,7 +8,7 @@ public interface CommentService {
     List<Comment> findAll();
     Comment findById(Long id);
     List<Comment> findAllByUserId(Long userId);
-    List<Comment> findAllByNewsId(Long newsId);
+    List<Comment> findAllByPostId(Long newsId);
     Comment save(Comment comment);
     Comment update(Comment comment);
     Comment deleteById(Long id);

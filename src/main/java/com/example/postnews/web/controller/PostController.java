@@ -5,8 +5,7 @@ import com.example.postnews.exception.EntityNotFoundException;
 import com.example.postnews.mapper.PostMapper;
 import com.example.postnews.service.PostService;
 import com.example.postnews.web.request.UpsertPostRequest;
-import com.example.postnews.web.response.PostFindAllResponse;
-import com.example.postnews.web.response.PostResponse;
+import com.example.postnews.web.response.post.PostResponse;
 import com.example.postnews.web.response.list.PostListResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.MessageFormat;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

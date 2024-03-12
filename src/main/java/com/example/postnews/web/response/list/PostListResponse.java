@@ -1,7 +1,6 @@
 package com.example.postnews.web.response.list;
 
-import com.example.postnews.web.response.PostFindAllResponse;
-import com.example.postnews.web.response.PostResponse;
+import com.example.postnews.web.response.post.PostFindAllResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

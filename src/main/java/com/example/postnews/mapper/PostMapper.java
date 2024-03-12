@@ -2,9 +2,9 @@ package com.example.postnews.mapper;
 
 import com.example.postnews.entity.Post;
 import com.example.postnews.web.request.UpsertPostRequest;
-import com.example.postnews.web.response.PostFindAllResponse;
-import com.example.postnews.web.response.PostResponse;
-import com.example.postnews.web.response.list.PostListResponse;
+import com.example.postnews.web.response.post.PostCategoryResponse;
+import com.example.postnews.web.response.post.PostFindAllResponse;
+import com.example.postnews.web.response.post.PostResponse;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -19,16 +19,13 @@ public interface PostMapper {
     Post requestToPost (UpsertPostRequest request);
     @Mapping(source = "postId", target = "id")
     Post requestToPost (Long postId, UpsertPostRequest request);
-
+    @Mapping(source = "user.username", target = "username")
     PostResponse postToResponse(Post post);
-
+    @Mapping(source = "user.username", target = "username")
     PostFindAllResponse postFindAllToResponse(Post post);
+
+    PostCategoryResponse postCategoryToResponse(Post post);
 
     List<PostFindAllResponse> postListToResponseList(List<Post> postList);
 
-    default PostListResponse postListToPostListResponse(List<Post> postList) {
-        PostListResponse response = new PostListResponse();
-        response.setPostResponseList(postListToResponseList(postList));
-        return response;
-    }
 }

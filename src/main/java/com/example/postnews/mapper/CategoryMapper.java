@@ -2,6 +2,7 @@ package com.example.postnews.mapper;
 
 import com.example.postnews.entity.Category;
 import com.example.postnews.web.request.UpsertCategoryRequest;
+import com.example.postnews.web.response.CategoryFindAllResponse;
 import com.example.postnews.web.response.CategoryResponse;
 import com.example.postnews.web.response.list.CategoryListResponse;
 import org.mapstruct.Mapper;
@@ -19,11 +20,8 @@ public interface CategoryMapper {
 
     CategoryResponse categoryToResponse(Category category);
 
+    CategoryFindAllResponse categoryFindAllToResponse(Category category);
+
     List<CategoryResponse> categoryListToResponseList(List<Category> categories);
 
-    default CategoryListResponse categoryListToCategoryListResponse(List<Category> categories) {
-        CategoryListResponse response = new CategoryListResponse();
-        response.setCategoryResponseList(categoryListToResponseList(categories));
-        return response;
-    }
 }

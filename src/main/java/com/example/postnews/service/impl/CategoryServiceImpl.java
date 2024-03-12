@@ -5,6 +5,7 @@ import com.example.postnews.repository.CategoryRepository;
 import com.example.postnews.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -23,13 +24,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> findAll(int pageNumber, int pageSize) {
+    public Page<Category> findAll(int pageNumber, int pageSize) {
         log.debug("CategoryServiceImpl->findAll pageNumber= {}, pageSize= {}", pageNumber, pageSize);
-        List<Category> categories = categoryRepository.findAll(PageRequest.of(pageNumber, pageSize)).toList();
-        for (Category category : categories) {
-            category.setPosts(null);
-        }
-        return categories;
+        return categoryRepository.findAll(PageRequest.of(pageNumber, pageSize));
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.example.postnews.web.controller;
 
 
 import com.example.postnews.exception.EntityNotFoundException;
-import com.example.postnews.web.response.ErrorResponse;
+import com.example.postnews.web.response.error.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;

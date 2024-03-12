@@ -34,9 +34,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Page<Post> findAll(int pageNumber, int pageSize) {
-
         log.debug("PostServiceImpl -> findAll pageNumber= {}, pageSize= {}", pageNumber, pageSize);
-
         return postRepository.findAll(PageRequest.of(pageNumber, pageSize));
     }
 

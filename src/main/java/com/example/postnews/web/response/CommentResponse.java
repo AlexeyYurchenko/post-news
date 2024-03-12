@@ -15,6 +15,8 @@ public class CommentResponse {
 
     private String comment;
 
+    private String username;
+
     private Instant createdAt;
 
 }

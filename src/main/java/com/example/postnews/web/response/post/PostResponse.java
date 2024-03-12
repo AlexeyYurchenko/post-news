@@ -1,5 +1,6 @@
-package com.example.postnews.web.response;
+package com.example.postnews.web.response.post;
 
+import com.example.postnews.web.response.CommentResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,8 @@ public class PostResponse {
     private String description;
 
     private String body;
+
+    private String username;
 
     private Instant createdAt;
 

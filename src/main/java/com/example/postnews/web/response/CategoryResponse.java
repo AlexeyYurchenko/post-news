@@ -1,6 +1,6 @@
 package com.example.postnews.web.response;
 
-import com.example.postnews.entity.Post;
+import com.example.postnews.web.response.post.PostCategoryResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +17,5 @@ public class CategoryResponse {
 
     private String name;
 
-    private List<Post> posts = new ArrayList<>();
-
+    private List<PostCategoryResponse> posts = new ArrayList<>();
 }

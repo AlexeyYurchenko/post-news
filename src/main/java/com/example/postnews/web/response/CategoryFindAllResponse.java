@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ErrorResponse {
+public class CategoryFindAllResponse {
 
-    private String errorMessage;
+    private Long id;
+
+    private String name;
 }

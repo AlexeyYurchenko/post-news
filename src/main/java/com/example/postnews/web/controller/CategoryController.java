@@ -10,9 +10,12 @@ import com.example.postnews.web.response.CategoryResponse;
 import com.example.postnews.web.response.list.CategoryListResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -29,8 +32,13 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<CategoryListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,
                                                         @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<Category> categories = categoryService.findAll(pageNumber,pageSize);
         return ResponseEntity.ok(
-                categoryMapper.categoryListToCategoryListResponse(categoryService.findAll(pageNumber,pageSize)));
+                CategoryListResponse.builder()
+                        .categoryResponseList(categories.stream().map(categoryMapper :: categoryFindAllToResponse).toList())
+                        .build()
+        );
     }
 
     @GetMapping("/{id}")

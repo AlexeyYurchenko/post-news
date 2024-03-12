@@ -6,8 +6,8 @@ import com.example.postnews.service.CategoryService;
 import com.example.postnews.service.CommentService;
 import com.example.postnews.service.UserService;
 import com.example.postnews.web.request.UpsertPostRequest;
-import com.example.postnews.web.response.PostFindAllResponse;
-import com.example.postnews.web.response.PostResponse;
+import com.example.postnews.web.response.post.PostFindAllResponse;
+import com.example.postnews.web.response.post.PostResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -51,6 +51,7 @@ public abstract class PostMapperDelegate implements PostMapper {
     public PostFindAllResponse postFindAllToResponse(Post post) {
         PostFindAllResponse response = postMapper.postFindAllToResponse(post);
         response.setCountComment(post.getComments().size());
+        response.setUsername(post.getUser().getUsername());
         return response;
     }
 
@@ -58,6 +59,7 @@ public abstract class PostMapperDelegate implements PostMapper {
     public PostResponse postToResponse(Post post) {
         PostResponse response = postMapper.postToResponse(post);
         response.setCountComment(post.getComments().size());
+        response.setUsername(post.getUser().getUsername());
         response.setComments(post.getComments().stream()
                 .map(it -> commentMapper.commentToResponse(it))
                 .toList());

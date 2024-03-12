@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,12 +27,12 @@ public class PostController {
     private final PostMapper postMapper;
 
     @GetMapping
-    public ResponseEntity <PostListResponse<PostFindAllResponse>> findAll(@RequestParam(defaultValue = "0") int pageNumber,
-                                                    @RequestParam(defaultValue = "10") int pageSize) {
-        Page<Post> posts = postService.findAll(pageNumber, pageSize);
+    public ResponseEntity <PostListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,
+                                                              @RequestParam(defaultValue = "10") int pageSize) {
 
+        Page<Post> posts = postService.findAll(pageNumber, pageSize);
         return ResponseEntity.ok(
-                        PostListResponse.<PostFindAllResponse>builder()
+                        PostListResponse.builder()
                 .totalCount(posts.getTotalElements())
                 .postResponseList(posts.stream().map(postMapper::postFindAllToResponse).toList())
                 .build()

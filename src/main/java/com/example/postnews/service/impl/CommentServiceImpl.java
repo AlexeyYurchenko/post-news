@@ -59,9 +59,12 @@ public class CommentServiceImpl implements CommentService {
     public Comment save(Comment comment) {
         log.debug("CommentServiceImpl->save comment= {}", comment);
         User user = userService.findById(comment.getUser().getId());
-        Post news = postService.findById(comment.getPost().getId());
-        comment.setUser(user);
-        comment.setPost(news);
+        Post post = postService.findById(comment.getPost().getId());
+        user.addComment(comment);
+        post.addComment(comment);
+
+//        comment.setUser(user);
+//        comment.setPost(news);
         return commentRepository.save(comment);
     }
 

@@ -34,7 +34,7 @@ public abstract class PostMapperDelegate implements PostMapper {
         Post post = new Post();
         post.setTitle(request.getTitle());
         post.setDescription(request.getDescription());
-        post.setBody(request.getCategoryName());
+        post.setBody(request.getBody());
         Category category = categoryService.findByName(request.getCategoryName());
         if (category == null) {
             category = new Category();

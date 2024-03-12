@@ -49,11 +49,13 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post save(Post post) {
-        log.debug("PostServiceImpl->save news= {}", post);
+        log.debug("PostServiceImpl->save post= {}", post);
         User user = userService.findById(post.getUser().getId());
         Category category = categoryService.findById(post.getCategory().getId());
-        post.setUser(user);
-        post.setCategory(category);
+        user.addPost(post);
+        category.addPost(post);
+//        post.setUser(user);
+//        post.setCategory(category);
         return postRepository.save(post);
     }
 

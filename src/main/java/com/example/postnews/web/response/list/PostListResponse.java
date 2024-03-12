@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostListResponse <PostFindAllResponse>{
+public class PostListResponse {
 
     private Long totalCount;
 

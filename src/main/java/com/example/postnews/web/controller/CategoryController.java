@@ -1,6 +1,7 @@
 package com.example.postnews.web.controller;
 
 import com.example.postnews.entity.Category;
+import com.example.postnews.entity.Post;
 import com.example.postnews.exception.EntityNotFoundException;
 import com.example.postnews.mapper.CategoryMapper;
 import com.example.postnews.service.CategoryService;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,6 +37,14 @@ public class CategoryController {
     public ResponseEntity<CategoryResponse> findById(@PathVariable Long id) {
         Category category = categoryService.findById(id);
         if (category != null) {
+            List<Post> postList = category.getPosts();
+            if (postList != null && !postList.isEmpty()) {
+                for (Post post : postList) {
+                    post.setCategory(null);
+                    post.setComments(null);
+                    post.setUser(null);
+                }
+            }
             return ResponseEntity.ok(categoryMapper.categoryToResponse(category));
         }
         throw new EntityNotFoundException(MessageFormat.format("Category with id = {0} not found", id));

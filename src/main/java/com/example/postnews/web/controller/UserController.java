@@ -5,10 +5,11 @@ import com.example.postnews.exception.EntityNotFoundException;
 import com.example.postnews.mapper.UserMapper;
 import com.example.postnews.service.UserService;
 import com.example.postnews.web.request.UpsertUserRequest;
-import com.example.postnews.web.response.UserResponse;
-import com.example.postnews.web.response.list.UserListResponse;
+import com.example.postnews.web.response.user.UserResponse;
+import com.example.postnews.web.response.user.UserListResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +27,11 @@ public class UserController {
     @GetMapping
     public ResponseEntity<UserListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,
                                                     @RequestParam(defaultValue = "10") int pageSize) {
-        return ResponseEntity.ok(userMapper.userListToUserListResponse(userService.findAll(pageNumber,pageSize)));
+        Page<User> users = userService.findAll(pageNumber,pageSize);
+        return ResponseEntity.ok(
+                UserListResponse.builder()
+                        .userResponseList(users.stream().map(userMapper :: userToResponse).toList()).build());
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
         User user = userService.findById(id);

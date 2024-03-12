@@ -1,4 +1,4 @@
-package com.example.postnews.web.response;
+package com.example.postnews.web.response.category;
 
 import com.example.postnews.web.response.post.PostCategoryResponse;
 import lombok.AllArgsConstructor;

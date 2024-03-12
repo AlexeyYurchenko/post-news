@@ -6,6 +6,7 @@ import com.example.postnews.repository.UserRepository;
 import com.example.postnews.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -25,16 +26,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll(int pageNumber, int pageSize) {
+    public Page<User> findAll(int pageNumber, int pageSize) {
         log.debug("UserServiceImpl->findAll pageNumber= {}, pageSize= {}", pageNumber, pageSize);
-        List<User> users = userRepository.findAll(PageRequest.of(pageNumber, pageSize)).toList();
-        for (User user : users) {
-            user.setComments(null);
-            for (Post post : user.getPosts()) {
-                post.setComments(null);
-            }
-        }
-        return users;
+        return userRepository.findAll(PageRequest.of(pageNumber, pageSize));
     }
 
     @Override

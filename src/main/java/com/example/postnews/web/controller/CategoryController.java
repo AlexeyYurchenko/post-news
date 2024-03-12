@@ -6,8 +6,8 @@ import com.example.postnews.exception.EntityNotFoundException;
 import com.example.postnews.mapper.CategoryMapper;
 import com.example.postnews.service.CategoryService;
 import com.example.postnews.web.request.UpsertCategoryRequest;
-import com.example.postnews.web.response.CategoryResponse;
-import com.example.postnews.web.response.list.CategoryListResponse;
+import com.example.postnews.web.response.category.CategoryResponse;
+import com.example.postnews.web.response.category.CategoryListResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +32,6 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<CategoryListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,
                                                         @RequestParam(defaultValue = "10") int pageSize) {
-
         Page<Category> categories = categoryService.findAll(pageNumber,pageSize);
         return ResponseEntity.ok(
                 CategoryListResponse.builder()

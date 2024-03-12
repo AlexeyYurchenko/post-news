@@ -2,9 +2,8 @@ package com.example.postnews.mapper;
 
 import com.example.postnews.entity.Category;
 import com.example.postnews.web.request.UpsertCategoryRequest;
-import com.example.postnews.web.response.CategoryFindAllResponse;
-import com.example.postnews.web.response.CategoryResponse;
-import com.example.postnews.web.response.list.CategoryListResponse;
+import com.example.postnews.web.response.category.CategoryFindAllResponse;
+import com.example.postnews.web.response.category.CategoryResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

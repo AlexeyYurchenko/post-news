@@ -4,10 +4,12 @@ import com.example.postnews.entity.Category;
 import com.example.postnews.entity.Post;
 import com.example.postnews.entity.User;
 import com.example.postnews.repository.PostRepository;
+import com.example.postnews.repository.specification.PostSpecification;
 import com.example.postnews.service.CategoryService;
 import com.example.postnews.service.PostService;
 import com.example.postnews.service.UserService;
 import com.example.postnews.utils.BeanUtils;
+import com.example.postnews.web.request.PostFilterRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -84,4 +86,9 @@ public class PostServiceImpl implements PostService {
         return deletedNews;
     }
 
+    @Override
+    public Page<Post> filterBy(PostFilterRequest filter) {
+        return postRepository.findAll(PostSpecification.withFilter(filter)
+                , PageRequest.of(filter.getPageNumber(), filter.getPageSize()));
+    }
 }

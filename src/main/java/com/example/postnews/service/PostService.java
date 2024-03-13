@@ -1,6 +1,7 @@
 package com.example.postnews.service;
 
 import com.example.postnews.entity.Post;
+import com.example.postnews.web.request.PostFilterRequest;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -14,6 +15,8 @@ public interface PostService {
     Post update(Post ost);
     Post deleteById(Long id);
     Post deleteByIdAndUserId(Long id, Long userId);
+
+    Page<Post> filterBy(PostFilterRequest filter);
 
 //    List<Post> filterBy(NewsFilter filter);
 }

@@ -4,9 +4,10 @@ import com.example.postnews.entity.Post;
 import com.example.postnews.exception.EntityNotFoundException;
 import com.example.postnews.mapper.PostMapper;
 import com.example.postnews.service.PostService;
+import com.example.postnews.web.request.PostFilterRequest;
 import com.example.postnews.web.request.UpsertPostRequest;
-import com.example.postnews.web.response.post.PostResponse;
 import com.example.postnews.web.response.list.PostListResponse;
+import com.example.postnews.web.response.post.PostResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,17 @@ public class PostController {
 
     private final PostService postService;
     private final PostMapper postMapper;
+
+    @GetMapping("/filter")
+    public ResponseEntity<PostListResponse> filterBy(PostFilterRequest filterRequest) {
+        Page<Post> posts = postService.filterBy(filterRequest);
+        return ResponseEntity.ok(
+                PostListResponse.builder()
+                        .totalCount(posts.getTotalElements())
+                        .postResponseList(posts.stream().map(postMapper::postFindAllToResponse).toList())
+                        .build()
+        );
+    }
 
     @GetMapping
     public ResponseEntity <PostListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,

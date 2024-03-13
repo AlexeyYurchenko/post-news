@@ -1,4 +1,4 @@
-package com.example.postnews.web.response;
+package com.example.postnews.web.response.comment;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

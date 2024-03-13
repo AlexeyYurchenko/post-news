@@ -2,7 +2,7 @@ package com.example.postnews.mapper;
 
 import com.example.postnews.entity.Comment;
 import com.example.postnews.web.request.UpsertCommentRequest;
-import com.example.postnews.web.response.CommentResponse;
+import com.example.postnews.web.response.comment.CommentResponse;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

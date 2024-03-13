@@ -1,6 +1,6 @@
 package com.example.postnews.web.response.post;
 
-import com.example.postnews.web.response.CommentResponse;
+import com.example.postnews.web.response.comment.CommentResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

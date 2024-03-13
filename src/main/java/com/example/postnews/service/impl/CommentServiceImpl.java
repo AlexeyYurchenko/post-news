@@ -62,9 +62,6 @@ public class CommentServiceImpl implements CommentService {
         Post post = postService.findById(comment.getPost().getId());
         user.addComment(comment);
         post.addComment(comment);
-
-//        comment.setUser(user);
-//        comment.setPost(news);
         return commentRepository.save(comment);
     }
 
@@ -107,4 +104,3 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.countAllByPostId(postId);
     }
 }
-

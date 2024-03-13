@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -26,18 +25,14 @@ public class CommentController {
     private final CommentMapper commentMapper;
     @GetMapping("/{postId}")
     public ResponseEntity<CommentListResponse> findByPostId(@PathVariable("postId") Long postId) {
-        List<CommentResponse> commentResponseList = new ArrayList<>();
-        List<Comment> comments = commentService.findAllByPostId(postId);
-        if (!comments.isEmpty()) {
-            for (Comment comment : comments) {
-//                comment.setNews(null);
-//                comment.setNews(null);
-                commentResponseList.add(commentMapper.commentToResponse(comment));
-            }
 
-            CommentListResponse commentListResponse = new CommentListResponse();
-            commentListResponse.setCommentResponseList(commentResponseList);
-            return ResponseEntity.ok(commentListResponse);
+        List<Comment> comments = commentService.findAllByPostId(postId);
+        if (comments !=null) {
+            return ResponseEntity.ok(
+                    CommentListResponse.builder()
+                            .commentResponseList(comments.stream().map(commentMapper :: commentToResponse)
+                                    .toList()).build()
+            );
         }
         throw new EntityNotFoundException(MessageFormat.format("No comments found for post with id= {0}", postId));
     }

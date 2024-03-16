@@ -32,10 +32,10 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<CategoryListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,
                                                         @RequestParam(defaultValue = "10") int pageSize) {
-        Page<Category> categories = categoryService.findAll(pageNumber,pageSize);
+        Page<Category> categories = categoryService.findAll(pageNumber, pageSize);
         return ResponseEntity.ok(
                 CategoryListResponse.builder()
-                        .categoryResponseList(categories.stream().map(categoryMapper :: categoryFindAllToResponse).toList())
+                        .categoryResponseList(categories.stream().map(categoryMapper::categoryFindAllToResponse).toList())
                         .build()
         );
     }
@@ -66,7 +66,7 @@ public class CategoryController {
     @PutMapping("/{id}")
     public ResponseEntity<CategoryResponse> update(@PathVariable("id") Long categoryId,
                                                    UpsertCategoryRequest request) {
-        Category updateCategory = categoryService.update(categoryMapper.requestToCategory(categoryId,request));
+        Category updateCategory = categoryService.update(categoryMapper.requestToCategory(categoryId, request));
         if (updateCategory != null) {
             return ResponseEntity.ok(categoryMapper.categoryToResponse(updateCategory));
         }

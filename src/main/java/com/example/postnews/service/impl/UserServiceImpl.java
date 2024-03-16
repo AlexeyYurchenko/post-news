@@ -1,6 +1,5 @@
 package com.example.postnews.service.impl;
 
-import com.example.postnews.entity.Post;
 import com.example.postnews.entity.User;
 import com.example.postnews.repository.UserRepository;
 import com.example.postnews.service.UserService;
@@ -34,8 +33,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long id) {
         log.debug("UserServiceImpl->findById id= {}", id);
-        User user = userRepository.findById(id).orElse(null);
-        return user;
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override

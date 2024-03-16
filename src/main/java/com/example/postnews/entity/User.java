@@ -6,7 +6,7 @@ import lombok.experimental.FieldNameConstants;
 
 import java.util.*;
 
-@Entity(name = "app_user")
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -37,6 +37,7 @@ public class User {
         comment.setUser(this);
         comments.add(comment);
     }
+
     public void addPost(Post post) {
         post.setUser(this);
         posts.add(post);

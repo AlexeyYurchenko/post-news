@@ -27,11 +27,12 @@ public class UserController {
     @GetMapping
     public ResponseEntity<UserListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,
                                                     @RequestParam(defaultValue = "10") int pageSize) {
-        Page<User> users = userService.findAll(pageNumber,pageSize);
+        Page<User> users = userService.findAll(pageNumber, pageSize);
         return ResponseEntity.ok(
                 UserListResponse.builder()
-                        .userResponseList(users.stream().map(userMapper :: userToResponse).toList()).build());
+                        .userResponseList(users.stream().map(userMapper::userToResponse).toList()).build());
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
         User user = userService.findById(id);
@@ -49,16 +50,17 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> update(@PathVariable("id") Long userId, UpsertUserRequest request) {
-        User updateUser = userService.update(userMapper.requestToUser(userId,request));
-        if (updateUser !=null) {
+        User updateUser = userService.update(userMapper.requestToUser(userId, request));
+        if (updateUser != null) {
             return ResponseEntity.ok(userMapper.userToResponse(updateUser));
         }
         throw new EntityNotFoundException(MessageFormat.format("User with id = {0} not found", userId));
     }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById (@PathVariable Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         User deleteUser = userService.deleteById(id);
-        if (deleteUser!=null) {
+        if (deleteUser != null) {
             return ResponseEntity.noContent().build();
         }
         throw new EntityNotFoundException(MessageFormat.format("User with id = {0} not found", id));

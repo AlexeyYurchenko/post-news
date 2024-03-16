@@ -23,14 +23,15 @@ public class CommentController {
 
     private final CommentService commentService;
     private final CommentMapper commentMapper;
+
     @GetMapping("/{postId}")
     public ResponseEntity<CommentListResponse> findByPostId(@PathVariable("postId") Long postId) {
 
         List<Comment> comments = commentService.findAllByPostId(postId);
-        if (comments !=null) {
+        if (comments != null) {
             return ResponseEntity.ok(
                     CommentListResponse.builder()
-                            .commentResponseList(comments.stream().map(commentMapper :: commentToResponse)
+                            .commentResponseList(comments.stream().map(commentMapper::commentToResponse)
                                     .toList()).build()
             );
         }
@@ -43,17 +44,19 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(commentMapper.commentToResponse(newComment));
 
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<CommentResponse> update(@PathVariable("id") Long commentId, UpsertCommentRequest request) {
-        Comment updateComment = commentService.update(commentMapper.requestToComment(commentId,request));
+        Comment updateComment = commentService.update(commentMapper.requestToComment(commentId, request));
         if (updateComment != null) {
             return ResponseEntity.ok(commentMapper.commentToResponse(updateComment));
         }
         throw new EntityNotFoundException(MessageFormat.format("Comment with id= {0} not found", commentId));
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id, @RequestParam("userId") Long userid) {
-        commentService.deleteByIdAndUserId(id,userid);
+        commentService.deleteByIdAndUserId(id, userid);
         return ResponseEntity.noContent().build();
     }
 }

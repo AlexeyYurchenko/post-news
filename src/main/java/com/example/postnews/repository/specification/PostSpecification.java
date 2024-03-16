@@ -11,7 +11,7 @@ public interface PostSpecification {
 
     static Specification<Post> withFilter(PostFilterRequest filter) {
         return Specification.where(
-                byCategoryName(filter.getCategoryName()))
+                        byCategoryName(filter.getCategoryName()))
                 .and(byUsername(filter.getUsername()));
     }
 

@@ -16,11 +16,14 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {CommentMapper.class})
 public interface PostMapper {
 
-    Post requestToPost (UpsertPostRequest request);
+    Post requestToPost(UpsertPostRequest request);
+
     @Mapping(source = "postId", target = "id")
-    Post requestToPost (Long postId, UpsertPostRequest request);
+    Post requestToPost(Long postId, UpsertPostRequest request);
+
     @Mapping(source = "user.username", target = "username")
     PostResponse postToResponse(Post post);
+
     @Mapping(source = "user.username", target = "username")
     PostFindAllResponse postFindAllToResponse(Post post);
 

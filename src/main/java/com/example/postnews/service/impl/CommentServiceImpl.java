@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -82,7 +83,7 @@ public class CommentServiceImpl implements CommentService {
     public Comment deleteById(Long id) {
         log.debug("CommentServiceImpl->deleteById id= {}", id);
         Comment comment = commentRepository.findById(id).orElse(null);
-        if (comment != null){
+        if (comment != null) {
             commentRepository.deleteById(id);
             return comment;
         }

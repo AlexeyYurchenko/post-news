@@ -1,6 +1,5 @@
 package com.example.postnews.web.response.user;
 
-import com.example.postnews.web.response.user.UserResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

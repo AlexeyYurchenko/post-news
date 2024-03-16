@@ -17,6 +17,4 @@ public interface UserMapper {
     User requestToUser(Long userId, UpsertUserRequest request);
 
     UserResponse userToResponse(User user);
-
 }
-

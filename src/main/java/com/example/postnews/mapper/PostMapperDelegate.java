@@ -20,13 +20,10 @@ public abstract class PostMapperDelegate implements PostMapper {
     private UserService userService;
     @Autowired
     private CommentService commentService;
-
     @Autowired
     private PostMapper postMapper;
-
     @Autowired
     private CommentMapper commentMapper;
-
 
 
     @Override

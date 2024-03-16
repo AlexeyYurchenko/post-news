@@ -6,7 +6,7 @@ import com.example.postnews.mapper.PostMapper;
 import com.example.postnews.service.PostService;
 import com.example.postnews.web.request.PostFilterRequest;
 import com.example.postnews.web.request.UpsertPostRequest;
-import com.example.postnews.web.response.list.PostListResponse;
+import com.example.postnews.web.response.post.PostListResponse;
 import com.example.postnews.web.response.post.PostResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,15 +37,15 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity <PostListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,
-                                                              @RequestParam(defaultValue = "10") int pageSize) {
+    public ResponseEntity<PostListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,
+                                                    @RequestParam(defaultValue = "10") int pageSize) {
 
         Page<Post> posts = postService.findAll(pageNumber, pageSize);
         return ResponseEntity.ok(
-                        PostListResponse.builder()
-                .totalCount(posts.getTotalElements())
-                .postResponseList(posts.stream().map(postMapper::postFindAllToResponse).toList())
-                .build()
+                PostListResponse.builder()
+                        .totalCount(posts.getTotalElements())
+                        .postResponseList(posts.stream().map(postMapper::postFindAllToResponse).toList())
+                        .build()
         );
     }
 
@@ -57,23 +57,26 @@ public class PostController {
         }
         throw new EntityNotFoundException(MessageFormat.format("Post with id = {0} not found", id));
     }
+
     @PostMapping
     public ResponseEntity<PostResponse> create(@RequestBody @Valid UpsertPostRequest request) {
         Post newPost = postService.save(postMapper.requestToPost(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(postMapper.postToResponse(newPost));
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<PostResponse> update (@PathVariable("id") Long postId, UpsertPostRequest request) {
-        Post updatePost = postService.update(postMapper.requestToPost(postId,request));
-        if (updatePost !=null) {
+    public ResponseEntity<PostResponse> update(@PathVariable("id") Long postId, UpsertPostRequest request) {
+        Post updatePost = postService.update(postMapper.requestToPost(postId, request));
+        if (updatePost != null) {
             return ResponseEntity.ok(postMapper.postToResponse(updatePost));
         }
         throw new EntityNotFoundException(MessageFormat.format("Post with id = {0} not found", postId));
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         Post deletePost = postService.deleteById(id);
-        if (deletePost !=null) {
+        if (deletePost != null) {
             return ResponseEntity.noContent().build();
         }
         throw new EntityNotFoundException(MessageFormat.format("Post with id = {0} not found", id));

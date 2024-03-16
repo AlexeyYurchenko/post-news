@@ -16,6 +16,4 @@ public class PostFilterRequest {
     private String categoryName;
 
     private String username;
-
-
 }

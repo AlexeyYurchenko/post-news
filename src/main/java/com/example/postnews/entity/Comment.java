@@ -6,7 +6,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -38,5 +37,4 @@ public class Comment {
     @JoinColumn(name = "post_id")
     @ToString.Exclude
     private Post post;
-
 }

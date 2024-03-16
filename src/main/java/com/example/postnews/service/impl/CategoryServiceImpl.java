@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -51,7 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
     public Category update(Category category) {
         log.debug("CategoryServiceImpl->update category= {}", category);
         Category existedCategory = categoryRepository.findById(category.getId()).orElse(null);
-        if (existedCategory != null){
+        if (existedCategory != null) {
             existedCategory.setName(category.getName());
             existedCategory.setPosts(category.getPosts());
             return categoryRepository.save(existedCategory);
@@ -63,7 +64,7 @@ public class CategoryServiceImpl implements CategoryService {
     public Category deleteById(Long id) {
         log.debug("CategoryServiceImpl->deleteById id= {}", id);
         Category category = categoryRepository.findById(id).orElse(null);
-        if (category != null){
+        if (category != null) {
             categoryRepository.deleteById(id);
             return category;
         }

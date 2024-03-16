@@ -19,7 +19,7 @@ import java.text.MessageFormat;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/category/post")
+@RequestMapping("/api/category/posts")
 public class PostController {
 
     private final PostService postService;

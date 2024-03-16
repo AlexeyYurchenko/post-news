@@ -7,7 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
-@Entity
+@Entity(name = "comments")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

@@ -6,7 +6,7 @@ import lombok.experimental.FieldNameConstants;
 
 import java.util.*;
 
-@Entity
+@Entity(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

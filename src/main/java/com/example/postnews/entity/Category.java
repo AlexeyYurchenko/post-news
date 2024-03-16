@@ -7,7 +7,7 @@ import lombok.experimental.FieldNameConstants;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name = "categories")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

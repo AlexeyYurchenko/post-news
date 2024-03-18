@@ -1,6 +1,7 @@
 package com.example.postnews.web.controller;
 
 
+import com.example.postnews.exception.AccessibleException;
 import com.example.postnews.exception.EntityNotFoundException;
 import com.example.postnews.web.response.error.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,14 @@ public class ExceptionHandlerController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ErrorResponse(ex.getLocalizedMessage()));
     }
+    @ExceptionHandler(AccessibleException.class)
+    public ResponseEntity<ErrorResponse> notAccessible(AccessibleException ex) {
+        log.error("Insufficient access rights for this operation", ex);
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ErrorResponse(ex.getLocalizedMessage()));
+    }
+
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> notValid(MethodArgumentNotValidException ex) {

@@ -46,7 +46,8 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CommentResponse> update(@PathVariable("id") Long commentId, UpsertCommentRequest request) {
+    public ResponseEntity<CommentResponse> update(@PathVariable("id") Long commentId,
+                                                  @RequestBody @Valid UpsertCommentRequest request) {
         Comment updateComment = commentService.update(commentMapper.requestToComment(commentId, request));
         if (updateComment != null) {
             return ResponseEntity.ok(commentMapper.commentToResponse(updateComment));

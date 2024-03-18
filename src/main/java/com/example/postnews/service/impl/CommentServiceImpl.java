@@ -1,5 +1,7 @@
 package com.example.postnews.service.impl;
 
+import com.example.postnews.aop.AccessibleDeleteComment;
+import com.example.postnews.aop.AccessibleUpdateComment;
 import com.example.postnews.entity.Comment;
 import com.example.postnews.entity.Post;
 import com.example.postnews.entity.User;
@@ -67,6 +69,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @AccessibleUpdateComment
     public Comment update(Comment comment) {
         log.debug("CommentServiceImpl->update comment= {}", comment);
         User user = userService.findById(comment.getUser().getId());
@@ -80,6 +83,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @AccessibleDeleteComment
     public Comment deleteById(Long id) {
         log.debug("CommentServiceImpl->deleteById id= {}", id);
         Comment comment = commentRepository.findById(id).orElse(null);
@@ -92,6 +96,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
+    @AccessibleDeleteComment
     public Comment deleteByIdAndUserId(Long id, Long userId) {
         log.debug("CommentServiceImpl->deleteByIdAndUserId id= {}, userId= {}", id, userId);
         Comment deletedComment = commentRepository.findById(id).orElse(null);

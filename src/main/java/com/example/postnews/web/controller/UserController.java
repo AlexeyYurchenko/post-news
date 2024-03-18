@@ -7,6 +7,11 @@ import com.example.postnews.service.UserService;
 import com.example.postnews.web.request.UpsertUserRequest;
 import com.example.postnews.web.response.user.UserResponse;
 import com.example.postnews.web.response.user.UserListResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,11 +24,24 @@ import java.text.MessageFormat;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
+@Tag(name = "User Controller")
 public class UserController {
 
     private final UserService userService;
     private final UserMapper userMapper;
 
+
+    @Operation(
+            summary = "Get users",
+            description = "Get All Users",
+            tags = {"users"}
+    )
+    @ApiResponse(
+            responseCode = "200",
+            content = {
+                    @Content(schema = @Schema(implementation = UserListResponse.class), mediaType = "application/json")
+            }
+    )
     @GetMapping
     public ResponseEntity<UserListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,
                                                     @RequestParam(defaultValue = "10") int pageSize) {
@@ -32,6 +50,8 @@ public class UserController {
                 UserListResponse.builder()
                         .userResponseList(users.stream().map(userMapper::userToResponse).toList()).build());
     }
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) {

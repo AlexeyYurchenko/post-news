@@ -27,7 +27,6 @@ public class DeleteCommentAspect {
         if (deletingComment.getUser().getId() == userId) {
             return proceedingJoinPoint.proceed(args);
         }
-
         throw new AccessibleException("User is not allowed to delete this comment");
     }
 }

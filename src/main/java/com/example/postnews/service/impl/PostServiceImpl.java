@@ -1,5 +1,7 @@
 package com.example.postnews.service.impl;
 
+import com.example.postnews.aop.AccessibleDeletePost;
+import com.example.postnews.aop.AccessibleUpdatePost;
 import com.example.postnews.entity.Category;
 import com.example.postnews.entity.Post;
 import com.example.postnews.entity.User;
@@ -37,20 +39,20 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Page<Post> findAll(int pageNumber, int pageSize) {
-        log.debug("PostServiceImpl -> findAll pageNumber= {}, pageSize= {}", pageNumber, pageSize);
+        log.debug("PostServiceImpl -> findAll pageNumber = {}, pageSize = {}", pageNumber, pageSize);
         return postRepository.findAll(PageRequest.of(pageNumber, pageSize));
     }
 
     @Override
     public Post findById(Long id) {
-        log.debug("PostServiceImpl->findById id= {}", id);
+        log.debug("PostServiceImpl -> findById id = {}", id);
         return postRepository.findById(id).orElse(null);
     }
 
 
     @Override
     public Post save(Post post) {
-        log.debug("PostServiceImpl->save post= {}", post);
+        log.debug("PostServiceImpl -> save post = {}", post);
         User user = userService.findById(post.getUser().getId());
         Category category = categoryService.findById(post.getCategory().getId());
         user.addPost(post);
@@ -59,8 +61,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @AccessibleUpdatePost
     public Post update(Post post) {
-        log.debug("PostServiceImpl->update news= {}", post);
+        log.debug("PostServiceImpl -> update news= {}", post);
         User user = userService.findById(post.getUser().getId());
         Category category = categoryService.findById(post.getCategory().getId());
         Post existedPost = findById(post.getId());
@@ -71,20 +74,22 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @AccessibleDeletePost
     public Post deleteById(Long id) {
-        log.debug("PostServiceImpl->deleteById id= {}", id);
+        log.debug("PostServiceImpl->deleteById id = {}", id);
         Post deletedNews = postRepository.findById(id).orElse(null);
         postRepository.deleteById(id);
         return deletedNews;
     }
 
     @Override
+    @AccessibleDeletePost
     @Transactional
     public Post deleteByIdAndUserId(Long id, Long userId) {
-        log.debug("NewsServiceImpl->deleteByIdAndUserId id= {}, userId= {}", id, userId);
-        Post deletedNews = postRepository.findById(id).orElse(null);
+        log.debug("PostServiceImpl->deleteByIdAndUserId id= {}, userId= {}", id, userId);
+        Post deletedPost = postRepository.findById(id).orElse(null);
         postRepository.deleteByIdAndUserId(id, userId);
-        return deletedNews;
+        return deletedPost;
     }
 
     @Override

@@ -65,7 +65,7 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostResponse> update(@PathVariable("id") Long postId, UpsertPostRequest request) {
+    public ResponseEntity<PostResponse> update(@PathVariable("id") Long postId, @RequestBody @Valid UpsertPostRequest request) {
         Post updatePost = postService.update(postMapper.requestToPost(postId, request));
         if (updatePost != null) {
             return ResponseEntity.ok(postMapper.postToResponse(updatePost));
@@ -74,8 +74,8 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        Post deletePost = postService.deleteById(id);
+    public ResponseEntity<Void> deleteById(@PathVariable Long id, @RequestParam("userId") Long userId) {
+        Post deletePost = postService.deleteByIdAndUserId(id,userId);
         if (deletePost != null) {
             return ResponseEntity.noContent().build();
         }

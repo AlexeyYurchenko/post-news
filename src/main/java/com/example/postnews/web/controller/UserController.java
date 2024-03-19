@@ -5,12 +5,14 @@ import com.example.postnews.exception.EntityNotFoundException;
 import com.example.postnews.mapper.UserMapper;
 import com.example.postnews.service.UserService;
 import com.example.postnews.web.request.UpsertUserRequest;
+import com.example.postnews.web.response.error.ErrorResponse;
 import com.example.postnews.web.response.user.UserResponse;
 import com.example.postnews.web.response.user.UserListResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +34,8 @@ public class UserController {
 
 
     @Operation(
-            summary = "Get users",
-            description = "Get All Users",
-            tags = {"users"}
+            summary = "Getting users",
+            description = "Getting All Users"
     )
     @ApiResponse(
             responseCode = "200",
@@ -51,8 +52,24 @@ public class UserController {
                         .userResponseList(users.stream().map(userMapper::userToResponse).toList()).build());
     }
 
-
-
+    @Operation(
+            summary = "Getting a user by his ID",
+            description = "Getting a user by his ID. return id username and email"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    content = {
+                            @Content(schema = @Schema(implementation = UserResponse.class), mediaType = "application/json")
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = {
+                            @Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")
+                    }
+            )
+    })
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
         User user = userService.findById(id);
@@ -62,12 +79,48 @@ public class UserController {
         throw new EntityNotFoundException(MessageFormat.format("User with id = {0} not found", id));
     }
 
+    @Operation(
+            summary = "Create new user",
+            description = "Create new user. Return new user"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    content = {
+                            @Content(schema = @Schema(implementation = UserResponse.class), mediaType = "application/json")
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "409",
+                    content = {
+                            @Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")
+                    }
+            )
+    })
     @PostMapping
     public ResponseEntity<UserResponse> create(@RequestBody @Valid UpsertUserRequest request) {
         User newUser = userService.save(userMapper.requestToUser(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(userMapper.userToResponse(newUser));
     }
 
+    @Operation(
+            summary = "Update user  ID",
+            description = "Update user by his ID. Return id, username and email"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    content = {
+                            @Content(schema = @Schema(implementation = UserResponse.class), mediaType = "application/json")
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = {
+                            @Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")
+                    }
+            )
+    })
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> update(@PathVariable("id") Long userId, UpsertUserRequest request) {
         User updateUser = userService.update(userMapper.requestToUser(userId, request));
@@ -77,6 +130,10 @@ public class UserController {
         throw new EntityNotFoundException(MessageFormat.format("User with id = {0} not found", userId));
     }
 
+    @Operation(
+            summary = "Removing a user by his ID",
+            description = "Removing a user by his ID"
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         User deleteUser = userService.deleteById(id);

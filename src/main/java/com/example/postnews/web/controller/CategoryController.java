@@ -9,7 +9,6 @@ import com.example.postnews.web.request.UpsertCategoryRequest;
 import com.example.postnews.web.response.category.CategoryListResponse;
 import com.example.postnews.web.response.category.CategoryResponse;
 import com.example.postnews.web.response.error.ErrorResponse;
-import com.example.postnews.web.response.user.UserResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -37,8 +36,8 @@ public class CategoryController {
     private final CategoryMapper categoryMapper;
 
     @Operation(
-            summary = "Getting categories",
-            description = "Getting All Categories"
+            summary = "Get categories",
+            description = "Get all categories and pagination(page number, page size)"
     )
     @ApiResponse(
             responseCode = "200",
@@ -58,8 +57,8 @@ public class CategoryController {
     }
 
     @Operation(
-            summary = "Getting a category by his ID",
-            description = "Getting a category by his ID. return id, category name and list posts"
+            summary = "Get a category by his id",
+            description = "Get a category by his id. return id, category name and list posts"
     )
     @ApiResponses({
             @ApiResponse(
@@ -94,7 +93,7 @@ public class CategoryController {
 
     @Operation(
             summary = "Create new category",
-            description = "Create new category. Return new category"
+            description = "Create new category. Return id, category name and list posts"
     )
     @ApiResponses({
             @ApiResponse(
@@ -117,8 +116,8 @@ public class CategoryController {
     }
 
     @Operation(
-            summary = "Update category by ID",
-            description = "Update category by his ID. return id, category name and list posts"
+            summary = "Update category by id",
+            description = "Update category by his ID. Return id, category name and list posts"
     )
     @ApiResponses({
             @ApiResponse(
@@ -145,8 +144,8 @@ public class CategoryController {
     }
 
     @Operation(
-            summary = "Removing a category by his ID",
-            description = "Removing a category by his ID"
+            summary = "Removing a category by his id",
+            description = "Removing a category by his id"
     )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {

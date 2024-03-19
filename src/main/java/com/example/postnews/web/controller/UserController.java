@@ -34,8 +34,8 @@ public class UserController {
 
 
     @Operation(
-            summary = "Getting users",
-            description = "Getting All Users"
+            summary = "Get users",
+            description = "Get all users and pagination(page number, page size)"
     )
     @ApiResponse(
             responseCode = "200",
@@ -53,8 +53,8 @@ public class UserController {
     }
 
     @Operation(
-            summary = "Getting a user by his ID",
-            description = "Getting a user by his ID. return id, username and email"
+            summary = "Get a user by his id",
+            description = "Get a user by his id. return id, username and email"
     )
     @ApiResponses({
             @ApiResponse(
@@ -81,7 +81,7 @@ public class UserController {
 
     @Operation(
             summary = "Create new user",
-            description = "Create new user. Return new user"
+            description = "Create new user. Return id, username and email"
     )
     @ApiResponses({
             @ApiResponse(
@@ -104,8 +104,8 @@ public class UserController {
     }
 
     @Operation(
-            summary = "Update user by ID",
-            description = "Update user by his ID. Return id, username and email"
+            summary = "Update user by id",
+            description = "Update user by his id. Return id, username and email"
     )
     @ApiResponses({
             @ApiResponse(
@@ -131,8 +131,8 @@ public class UserController {
     }
 
     @Operation(
-            summary = "Removing a user by his ID",
-            description = "Removing a user by his ID"
+            summary = "Removing a user by his id",
+            description = "Removing a user by his id"
     )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {

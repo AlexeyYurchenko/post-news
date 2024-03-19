@@ -6,16 +6,22 @@ import com.example.postnews.exception.EntityNotFoundException;
 import com.example.postnews.mapper.CategoryMapper;
 import com.example.postnews.service.CategoryService;
 import com.example.postnews.web.request.UpsertCategoryRequest;
-import com.example.postnews.web.response.category.CategoryResponse;
 import com.example.postnews.web.response.category.CategoryListResponse;
+import com.example.postnews.web.response.category.CategoryResponse;
+import com.example.postnews.web.response.error.ErrorResponse;
+import com.example.postnews.web.response.user.UserResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -23,12 +29,23 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/categories")
+@Tag(name = "Category Controller")
 public class CategoryController {
 
     private final CategoryService categoryService;
 
     private final CategoryMapper categoryMapper;
 
+    @Operation(
+            summary = "Getting categories",
+            description = "Getting All Categories"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            content = {
+                    @Content(schema = @Schema(implementation = CategoryListResponse.class), mediaType = "application/json")
+            }
+    )
     @GetMapping
     public ResponseEntity<CategoryListResponse> findAll(@RequestParam(defaultValue = "0") int pageNumber,
                                                         @RequestParam(defaultValue = "10") int pageSize) {
@@ -40,6 +57,24 @@ public class CategoryController {
         );
     }
 
+    @Operation(
+            summary = "Getting a category by his ID",
+            description = "Getting a category by his ID. return id, category name and list posts"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    content = {
+                            @Content(schema = @Schema(implementation = CategoryResponse.class), mediaType = "application/json")
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = {
+                            @Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")
+                    }
+            )
+    })
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponse> findById(@PathVariable Long id) {
         Category category = categoryService.findById(id);
@@ -57,12 +92,48 @@ public class CategoryController {
         throw new EntityNotFoundException(MessageFormat.format("Category with id = {0} not found", id));
     }
 
+    @Operation(
+            summary = "Create new category",
+            description = "Create new category. Return new category"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    content = {
+                            @Content(schema = @Schema(implementation = CategoryResponse.class), mediaType = "application/json")
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "409",
+                    content = {
+                            @Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")
+                    }
+            )
+    })
     @PostMapping
     public ResponseEntity<CategoryResponse> create(@RequestBody @Valid UpsertCategoryRequest request) {
         Category newCategory = categoryService.save(categoryMapper.requestToCategory(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryMapper.categoryToResponse(newCategory));
     }
 
+    @Operation(
+            summary = "Update category by ID",
+            description = "Update category by his ID. return id, category name and list posts"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    content = {
+                            @Content(schema = @Schema(implementation = CategoryResponse.class), mediaType = "application/json")
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    content = {
+                            @Content(schema = @Schema(implementation = ErrorResponse.class), mediaType = "application/json")
+                    }
+            )
+    })
     @PutMapping("/{id}")
     public ResponseEntity<CategoryResponse> update(@PathVariable("id") Long categoryId,
                                                    UpsertCategoryRequest request) {
@@ -73,6 +144,10 @@ public class CategoryController {
         throw new EntityNotFoundException(MessageFormat.format("Category with id = {0} not found", categoryId));
     }
 
+    @Operation(
+            summary = "Removing a category by his ID",
+            description = "Removing a category by his ID"
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         Category deleteCategory = categoryService.deleteById(id);

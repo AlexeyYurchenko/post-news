@@ -54,7 +54,7 @@ public class UserController {
 
     @Operation(
             summary = "Getting a user by his ID",
-            description = "Getting a user by his ID. return id username and email"
+            description = "Getting a user by his ID. return id, username and email"
     )
     @ApiResponses({
             @ApiResponse(
@@ -104,7 +104,7 @@ public class UserController {
     }
 
     @Operation(
-            summary = "Update user  ID",
+            summary = "Update user by ID",
             description = "Update user by his ID. Return id, username and email"
     )
     @ApiResponses({

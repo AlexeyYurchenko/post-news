@@ -40,3 +40,4 @@
 1. Запустите докер контейнер в папке docker: <b>docker-compose up</b>
 2. Выполните команду: <b>./gradlew build</b>
 3. Запустите приложение: <b>java -jar .\build\libs\post-news.jar</b>
+4. OpenAPI http://localhost:8080/swagger-ui/index.html#/

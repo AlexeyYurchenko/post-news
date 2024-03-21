@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UpsertCommentRequest {
 
-    @NotNull(message = "User ID not specified")
+    @NotNull(message = "User ID not null")
     private Long userId;
 
-    @NotNull(message = "Post ID not specified")
+    @NotNull(message = "Post ID not null")
     private Long postId;
 
     @NotBlank(message = "Comment cannot be empty")

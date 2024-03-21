@@ -135,7 +135,7 @@ public class CategoryController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<CategoryResponse> update(@PathVariable("id") Long categoryId,
-                                                   UpsertCategoryRequest request) {
+                                                   @RequestBody @Valid UpsertCategoryRequest request) {
         Category updateCategory = categoryService.update(categoryMapper.requestToCategory(categoryId, request));
         if (updateCategory != null) {
             return ResponseEntity.ok(categoryMapper.categoryToResponse(updateCategory));

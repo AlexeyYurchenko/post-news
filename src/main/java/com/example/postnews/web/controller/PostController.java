@@ -147,7 +147,8 @@ public class PostController {
             )
     })
     @PutMapping("/{id}")
-    public ResponseEntity<PostResponse> update(@PathVariable("id") Long postId, @RequestBody @Valid UpsertPostRequest request) {
+    public ResponseEntity<PostResponse> update(@PathVariable("id") Long postId,
+                                               @RequestBody @Valid UpsertPostRequest request) {
         Post updatePost = postService.update(postMapper.requestToPost(postId, request));
         if (updatePost != null) {
             return ResponseEntity.ok(postMapper.postToResponse(updatePost));

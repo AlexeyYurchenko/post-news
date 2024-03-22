@@ -1,5 +1,6 @@
-package com.example.postnews.user;
+package com.example.postnews;
 
+import com.example.postnews.entity.Category;
 import com.example.postnews.entity.Comment;
 import com.example.postnews.entity.Post;
 import com.example.postnews.entity.User;
@@ -10,12 +11,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.Instant;
 import java.util.ArrayList;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public abstract class AbstractTestUserController {
+public abstract class AbstractTestController {
 
     @Autowired
     protected MockMvc mockMvc;
@@ -33,11 +35,16 @@ public abstract class AbstractTestUserController {
         }
         return user;
     }
-
-
-
-
-
+    protected Comment createComment(Long id, User user, Post post) {
+        return new Comment(id,"comment" +id, Instant.now(),Instant.now(),user,post);
+    }
+    protected Post createPost(Long id, Category category, User user) {
+        return new Post(id,"tittle" + id,"description" + id,"body" + id,
+                Instant.now(),Instant.now(),category,user,new ArrayList<>());
+    }
+    protected Category createCategory(Long id) {
+        return new Category(id,"name" + id,new ArrayList<>());
+    }
 
 
 }

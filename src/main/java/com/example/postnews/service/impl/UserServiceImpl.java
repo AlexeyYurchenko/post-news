@@ -20,31 +20,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        log.debug("UserServiceImpl->findAll");
+        log.debug("UserServiceImpl -> findAll");
         return userRepository.findAll();
     }
 
     @Override
     public Page<User> findAll(int pageNumber, int pageSize) {
-        log.debug("UserServiceImpl->findAll pageNumber= {}, pageSize= {}", pageNumber, pageSize);
+        log.debug("UserServiceImpl -> findAll pageNumber= {}, pageSize= {}", pageNumber, pageSize);
         return userRepository.findAll(PageRequest.of(pageNumber, pageSize));
     }
 
     @Override
     public User findById(Long id) {
-        log.debug("UserServiceImpl->findById id= {}", id);
+        log.debug("UserServiceImpl -> findById id= {}", id);
         return userRepository.findById(id).orElse(null);
     }
 
     @Override
     public User save(User user) {
-        log.debug("UserServiceImpl->save user= {}", user);
+        log.debug("UserServiceImpl -> save user= {}", user);
         return userRepository.save(user);
     }
 
     @Override
     public User update(User user) {
-        log.debug("UserServiceImpl->update user= {}", user);
+        log.debug("UserServiceImpl -> update user= {}", user);
         User existedUser = userRepository.findById(user.getId()).orElse(null);
         if (existedUser != null) {
             existedUser.setUsername(user.getUsername());
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User deleteById(Long id) {
-        log.debug("UserServiceImpl->deleteById id= {}", id);
+        log.debug("UserServiceImpl -> deleteById id= {}", id);
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
             userRepository.deleteById(id);

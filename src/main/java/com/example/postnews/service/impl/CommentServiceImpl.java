@@ -38,13 +38,13 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment findById(Long id) {
-        log.debug("CommentServiceImpl->findById id= {}", id);
+        log.debug("CommentServiceImpl -> findById id= {}", id);
         return commentRepository.findById(id).orElse(null);
     }
 
     @Override
     public List<Comment> findAllByUserId(Long userId) {
-        log.debug("CommentServiceImpl->findAllByUserId userId= {}", userId);
+        log.debug("CommentServiceImpl -> findAllByUserId userId= {}", userId);
         List<Comment> comments = commentRepository.findAllByUserId(userId);
         if (comments != null) {
             return comments;
@@ -54,13 +54,13 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> findAllByPostId(Long postId) {
-        log.debug("CommentServiceImpl->findAllByNewsId postId= {}", postId);
+        log.debug("CommentServiceImpl -> findAllByNewsId postId= {}", postId);
         return commentRepository.findAllByPostId(postId);
     }
 
     @Override
     public Comment save(Comment comment) {
-        log.debug("CommentServiceImpl->save comment= {}", comment);
+        log.debug("CommentServiceImpl -> save comment= {}", comment);
         User user = userService.findById(comment.getUser().getId());
         Post post = postService.findById(comment.getPost().getId());
         user.addComment(comment);
@@ -71,7 +71,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @AccessibleUpdateComment
     public Comment update(Comment comment) {
-        log.debug("CommentServiceImpl->update comment= {}", comment);
+        log.debug("CommentServiceImpl -> update comment= {}", comment);
         User user = userService.findById(comment.getUser().getId());
         Post post = postService.findById(comment.getPost().getId());
         Comment existedComment = findById(comment.getId());
@@ -85,7 +85,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @AccessibleDeleteComment
     public Comment deleteById(Long id) {
-        log.debug("CommentServiceImpl->deleteById id= {}", id);
+        log.debug("CommentServiceImpl -> deleteById id= {}", id);
         Comment comment = commentRepository.findById(id).orElse(null);
         if (comment != null) {
             commentRepository.deleteById(id);
@@ -98,7 +98,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @AccessibleDeleteComment
     public Comment deleteByIdAndUserId(Long id, Long userId) {
-        log.debug("CommentServiceImpl->deleteByIdAndUserId id= {}, userId= {}", id, userId);
+        log.debug("CommentServiceImpl -> deleteByIdAndUserId id= {}, userId= {}", id, userId);
         Comment deletedComment = commentRepository.findById(id).orElse(null);
         commentRepository.deleteByIdAndUserId(id, userId);
         return deletedComment;
@@ -106,7 +106,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Long countAllByNewsId(Long postId) {
-        log.debug("CommentServiceImpl->countAllByPostId PostId= {}", postService);
+        log.debug("CommentServiceImpl -> countAllByPostId PostId= {}", postService);
         return commentRepository.countAllByPostId(postId);
     }
 }

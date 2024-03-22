@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UpsertPostRequest {
 
-    @NotNull(message = "User ID not null")
+    @NotNull(message = "User ID cannot be empty")
     private Long userId;
 
-    @NotBlank(message = "The post title is required")
+    @NotBlank(message = "The post title cannot be empty")
     private String title;
 
     private String description;
@@ -22,6 +22,6 @@ public class UpsertPostRequest {
     @NotBlank(message = "The post body cannot be empty")
     private String body;
 
-    @NotBlank(message = "Post category name not blank")
+    @NotBlank(message = "Post category name cannot be empty")
     private String categoryName;
 }

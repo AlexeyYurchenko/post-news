@@ -32,4 +32,3 @@ public class UpdateCommentAspect {
         throw new AccessibleException("User is not allowed to update this comment");
     }
 }
-

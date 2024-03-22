@@ -18,7 +18,7 @@ public interface PostService {
 
     Post update(Post ost);
 
-    Post deleteById(Long id);
+//    Post deleteById(Long id);
 
     Post deleteByIdAndUserId(Long id, Long userId);
 

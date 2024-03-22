@@ -73,14 +73,14 @@ public class PostServiceImpl implements PostService {
         return postRepository.save(existedPost);
     }
 
-    @Override
-    @AccessibleDeletePost
-    public Post deleteById(Long id) {
-        log.debug("PostServiceImpl->deleteById id = {}", id);
-        Post deletedNews = postRepository.findById(id).orElse(null);
-        postRepository.deleteById(id);
-        return deletedNews;
-    }
+//    @Override
+//    @AccessibleDeletePost
+//    public Post deleteById(Long id) {
+//        log.debug("PostServiceImpl->deleteById id = {}", id);
+//        Post deletedNews = postRepository.findById(id).orElse(null);
+//        postRepository.deleteById(id);
+//        return deletedNews;
+//    }
 
     @Override
     @AccessibleDeletePost

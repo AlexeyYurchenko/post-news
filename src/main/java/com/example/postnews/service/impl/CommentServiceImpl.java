@@ -82,17 +82,17 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.save(existedComment);
     }
 
-    @Override
-    @AccessibleDeleteComment
-    public Comment deleteById(Long id) {
-        log.debug("CommentServiceImpl -> deleteById id= {}", id);
-        Comment comment = commentRepository.findById(id).orElse(null);
-        if (comment != null) {
-            commentRepository.deleteById(id);
-            return comment;
-        }
-        return null;
-    }
+//    @Override
+//    @AccessibleDeleteComment
+//    public Comment deleteById(Long id) {
+//        log.debug("CommentServiceImpl -> deleteById id= {}", id);
+//        Comment comment = commentRepository.findById(id).orElse(null);
+//        if (comment != null) {
+//            commentRepository.deleteById(id);
+//            return comment;
+//        }
+//        return null;
+//    }
 
     @Override
     @Transactional
